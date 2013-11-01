@@ -18,8 +18,6 @@ import android.view.Menu;
 
 public class MainActivity extends Activity {
 	
-	private static final int REQUEST_ENABLE_BT = 1;
-
 	ListView listDevicesFound;
 	TextView stateBluetooth, textScanDevice;
 	
@@ -43,14 +41,31 @@ public class MainActivity extends Activity {
         arrayListBluetoothDevices = null;
         arrayListBluetoothDevices = new ArrayList<BluetoothDevice>();
 
-    	if (bluetoothAdapter!= null  && bluetoothAdapter.isDiscovering()){
+    	if (bluetoothAdapter == null){
+        	stateBluetooth.setText("No Bluetooth support on this device ! ");
+    	}
+        if (bluetoothAdapter!= null  && bluetoothAdapter.isDiscovering()){
     		bluetoothAdapter.cancelDiscovery();
         }
+    	
+        if (bluetoothAdapter.isEnabled()){
+        	if(bluetoothAdapter.isDiscovering()){
+        			stateBluetooth.setText("Bluetooth in device discovery mode.");
+        	}else{
+        		stateBluetooth.setText("Bluetooth is ON.");
+        		Log.i("CheckBlueToothState()","In initializing state");
+        		textScanDevice.setText("Scanning in progress...");
+        		bluetoothAdapter.startDiscovery();
+        		}
+        }else{
+        		stateBluetooth.setText("Bluetooth is OFF");
+        		bluetoothAdapter.enable();
+       	}
 
-        CheckBlueToothState();
         registerReceiver(ActionFoundReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         registerReceiver(ActionFoundReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
-        registerReceiver(ActionFoundReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED));               
+        registerReceiver(ActionFoundReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED));
+        registerReceiver(ActionFoundReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 	}
 
 	@Override
@@ -64,38 +79,13 @@ public class MainActivity extends Activity {
     	if (bluetoothAdapter.isDiscovering()){
     		bluetoothAdapter.cancelDiscovery();
         }
-    	bluetoothAdapter.disable();
+    	if(bluetoothAdapter!=null){
+    		bluetoothAdapter.disable();
+    	}
 		super.onDestroy();
 		unregisterReceiver(ActionFoundReceiver);
 	}
 
-	private void CheckBlueToothState(){
-    	if (bluetoothAdapter == null){
-        	stateBluetooth.setText("No Bluetooth support on this device ! ");
-        }else{
-        	if (bluetoothAdapter.isEnabled()){
-        		if(bluetoothAdapter.isDiscovering()){
-        			stateBluetooth.setText("Bluetooth in device discovery mode.");
-        		}else{
-        			stateBluetooth.setText("Bluetooth is enabled.");
-        			Log.i("CheckBlueToothState()","In initializing state");
-        			textScanDevice.setText("Scanning...");
-        			bluetoothAdapter.startDiscovery();
-        		}
-        	}else{
-        		stateBluetooth.setText("Bluetooth is not enabled !");
-        		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        	    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        	}
-        }
-    }
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == REQUEST_ENABLE_BT){
-			CheckBlueToothState();
-		}
-	}
 	
 	private final BroadcastReceiver ActionFoundReceiver = new BroadcastReceiver(){
 		@Override
@@ -124,11 +114,29 @@ public class MainActivity extends Activity {
 	            }
 		    }
 			else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
-    			textScanDevice.setText("\nScanning done.");
+    			textScanDevice.setText("Scanning done.");
 			}
 			else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)){
-    			textScanDevice.setText("\nScanning in progress...");
+    			textScanDevice.setText("Scanning in progress...");
 			}
+			else if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+	            final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+	            switch (state) {
+	            case BluetoothAdapter.STATE_OFF:
+	            	stateBluetooth.setText("Bluetooth is OFF");
+	                break;
+	            case BluetoothAdapter.STATE_TURNING_OFF:
+	            	stateBluetooth.setText("Turning Bluetooth off...");
+	                break;
+	            case BluetoothAdapter.STATE_ON:
+	            	stateBluetooth.setText("Bluetooth is ON");
+        			bluetoothAdapter.startDiscovery();
+	                break;
+	            case BluetoothAdapter.STATE_TURNING_ON:
+	            	stateBluetooth.setText("Turning Bluetooth on...");
+	                break;
+	            }
+	        }
 			
 		}
     };

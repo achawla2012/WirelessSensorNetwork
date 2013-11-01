@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BluetoothScan</string>
+    <string name="action_settings">Settings</string>
+    <string name="scan">Scan Bluetooth Devices</string>
+    <string name="pair">Find paired Devices"</string>
+
+</resources>

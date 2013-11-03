@@ -42,15 +42,7 @@ public class MainActivity extends Activity {
     BluetoothClass bluetoothClass;
 	ArrayAdapter<String> discoveredArrayAdapter,pairedAdapter;
 	ArrayList<BluetoothDevice> arrayListDiscoveredDevices,arraylistviewPairedDevices;
-	private BluetoothAdapter _bluetoothAdapter;
-	private BluetoothSocket _socket;
-	private BluetoothDevice _device = null;
 	private OutputStream outputStream = null;
-	private InputStream inputStream = null;
-	private Thread _workerThread;
-	private byte[] _readBuffer;
-	private int _readBufferPosition;
-	private volatile boolean _stopWorker;
 	
 	private final static char[] HEX_DIGITS =  { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 	ListItemClicked listItemClicked;

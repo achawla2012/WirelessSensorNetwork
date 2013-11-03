@@ -18,32 +18,26 @@
     android:layout_height="wrap_content" 
     />
 
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Send Message"
+    android:id="@+id/sendMsg"
+    android:layout_gravity="center_horizontal"
+    android:enabled="false"/>
+
 <TextView
     android:id="@+id/scanMsg" 
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     />
 
-
 <ListView
     android:id="@+id/devicesfound" 
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
-    /> 
-
-<Button
-    android:id="@+id/listpaireddevices" 
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content"
-    android:text="@string/pair" 
-    android:enabled="false"
-    /> 
-
-
-<ListView 
-		android:id="@+id/paired_devices"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-	/>
+    android:textSize="5pt"/> 
     
+
+
 </LinearLayout>

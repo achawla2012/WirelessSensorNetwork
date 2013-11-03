@@ -3,13 +3,15 @@ WSN
 
 Scanning Bluetooth devices
 
-Milestones covered:
+Achieved Milestones:
 
 10/31/2013: <br/>
-  a. Till now once an app is launched. it straight asks user to start BlueTooth. <br/>
-  b. App is able to sense and list out nearby BlueTooth devices. <br/>
-     (Done: added logic where scanned device is added only once into the Arraylist, need to test this case) <br/>
+  a. [DONE] On launching App, enable BlueTooth if it is not enabled. <br/>
+  b. [DONE] App should sense and list out BlueTooth devices in the vicinity. <br/>
   
-Next Milestone: (May be by 1/10/2013)<br/>
-  a. [Done] Rather than asking user to scan devices, app should automatically start searching once the bluetooth is on.<br/>
-  b. [In progress] How to do pairing and createbond with other BlueTooth Device.
+11/3/2013: <br/>
+  a. [Done] Once the bluetooth is on, App automatically starts searching bluetooth devices regardless of their paired or un-paired state.<br/>
+  b. [Done] Pair with one of the detected BlueTooth Devices by creating bond.
+  
+Next Milestone:
+  a. Message passing to a paired device.

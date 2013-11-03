@@ -17,4 +17,4 @@ Achieved Milestones:
 Next Milestone:
   11/?/2013: <br/>
     a. [In Progress] Message passing to a paired device. <br/>
-       Currently facing issue with application UUID while creating socket.
+       Currently facing issue with opening a bluetooth rfcomm socket via the UUID method

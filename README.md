@@ -15,6 +15,6 @@ Achieved Milestones:
     b. [Done] Pair with one of the detected BlueTooth Devices by creating bond.
   
 Next Milestone:
-  11/?/2013: <br/>
-    a. [In Progress] Message passing to a paired device. <br/>
-       Currently facing issue with opening a bluetooth rfcomm socket via the UUID method
+  11/8/2013: <br/>
+    a. [Done currently in testing] Message passing to a paired device. <br/>
+       
